@@ -2,8 +2,10 @@ package uk.co.gavd.android.multigotchi.pets;
 
 public class BehaviourNotFoundException extends Exception {
 
-	public BehaviourNotFoundException(String string) {
-		// TODO Auto-generated constructor stub
+	private static final long serialVersionUID = -5797732733182107090L;
+
+	public BehaviourNotFoundException(String message) {
+		super(message);
 	}
 
 }

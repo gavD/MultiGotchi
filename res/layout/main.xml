@@ -16,8 +16,16 @@
             android:text="Flame on" />
     </TableRow>
     
-    <TextView android:id="@+id/textOutput" android:layout_width="wrap_content" android:text="Welcome to DragonGotchi" android:autoText="false" android:layout_height="wrap_content"/>
+    <ImageView
+    android:id="@+id/sprite"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="left"
+	    android:src="@drawable/dragon"
+	/>
 
+    <TextView android:id="@+id/textOutput" android:layout_width="wrap_content" android:text="Welcome to DragonGotchi" android:autoText="false" android:layout_height="wrap_content"/>
+    	
     <TableRow>
  	   <Button android:id="@+id/btn_3"
             android:layout_height="wrap_content"
@@ -31,19 +39,5 @@
             android:text="Sleep" />
             
     </TableRow>
+
 </TableLayout>
-<!-- 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent" 
-              android:layout_height="fill_parent" 
-              android:orientation="vertical" >
-  
-
-   
-    <Button android:id="@+id/btn_breatheFire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Breathe fire" />
-</LinearLayout>
-
- -->

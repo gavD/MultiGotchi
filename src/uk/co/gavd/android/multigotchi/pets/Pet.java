@@ -1,19 +1,28 @@
 package uk.co.gavd.android.multigotchi.pets;
 
-
+/**
+ * Base class for all Pets
+ * 
+ * Has 4 attributes and 4 behaviours, and methods for accessing
+ * those.
+ * 
+ * @author Gavin Davies
+ */
 public abstract class Pet {
 	public abstract String getType();
-	public abstract String getGoal();
+	public abstract void tick() throws AttributeNotFoundException;
 
-	protected Attribute attribute1;
-	protected Attribute attribute2;
-	protected Attribute attribute3;
-	protected Attribute attribute4;
+	private Attribute attribute1;
+	private Attribute attribute2;
+	private Attribute attribute3;
+	private Attribute attribute4;
 	
-	protected Behaviour behaviour1;
-	protected Behaviour behaviour2;
-	protected Behaviour behaviour3;
-	protected Behaviour behaviour4;
+	private Behaviour behaviour1;
+	private Behaviour behaviour2;
+	private Behaviour behaviour3;
+	private Behaviour behaviour4;
+	
+	protected boolean dead = false;
 	
 	public void setAttributes(Attribute attribute1,
 			Attribute attribute2,
@@ -37,6 +46,15 @@ public abstract class Pet {
 		this.behaviour4 = theBehaviour4;		
 	}
 	
+	/**
+	 * Go through the attributes this pet has and try
+	 * to find one that is named [attributeName]
+	 * 
+	 * @param attributeName The name the attribute has
+	 * @return The attribute that has name [attributeName]
+	 * @throws AttributeNotFoundException If there is no
+	 * attribute that has name [attributeName]
+	 */
 	public Attribute getAttribute(String attributeName)
 	throws AttributeNotFoundException
 	{
@@ -63,6 +81,14 @@ public abstract class Pet {
 			attribute4.getName();
 	}
 	
+	/**
+	 * Get an attribute by index
+	 * @param index 1, 2, 3 or 4, indicating which you are
+	 * after
+	 * @return The attribute at index [index]
+	 * @throws AttributeNotFoundException If there is no
+	 * attribute at position [index]
+	 */
 	public Attribute getAttribute(int index) throws AttributeNotFoundException {
 		switch (index) {
 		case 1: return attribute1;
@@ -109,8 +135,21 @@ public abstract class Pet {
 		getBehaviour(operationIndex).execute();
 	}
 	
-	public abstract void tick() throws AttributeNotFoundException;
-
+	/**
+	 * Kill off this pet
+	 */
+	public void die() {
+		this.dead = true;
+	}
+	
+	/**
+	 * @return Whether this pet has died, generally because an
+	 * attribute has gone below the minimum threshold
+	 */
+	public boolean isDead() {
+		return this.dead;
+	}
+	
 	@Override
 	public String toString() {
 		return attribute1.toString() + "\n"

@@ -1,14 +1,16 @@
 package uk.co.gavd.android.multigotchi;
 
+// TODO give credit for image http://antifarea.deviantart.com/ / http://opengameart.org/content/10-fantasy-rpg-enemies
+
 import uk.co.gavd.android.multigotchi.pets.*;
 import android.app.Activity;
-import android.widget.*;
-import android.widget.TextView.BufferType;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.os.CountDownTimer;
-import android.os.CountDownTimer;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainView extends Activity {
 	private Button btn1;
@@ -17,14 +19,20 @@ public class MainView extends Activity {
 	private Button btn4;
 	private TextView textOutput;
 	private Pet model;
+	private ImageView sprite;
 	
 	private static final int MILLISECONDS_BETWEEN_TICKS = 4000;
 	
 	// Create an anonymous implementation of OnClickListener
 	private OnClickListener listener = new OnClickListener() {
 		public void onClick(View v) {
+			if(model.isDead()) {
+				return;
+			}
+			
 			try {
 				if(v.equals(btn1)) {
+					sprite.setImageResource(R.drawable.icon);
 					model.operation(1);
 				} else if(v.equals(btn2)) {
 					model.operation(2);
@@ -33,13 +41,14 @@ public class MainView extends Activity {
 				} else if(v.equals(btn4)) {
 					model.operation(4);
 				}
-				
-				updateText();
+
 			} catch (AttributeNotFoundException e) {
 				// TODO
 			} catch (BehaviourNotFoundException e) {
 				// TODO
 			}
+			
+			updateText();
 		}
 	};
 	
@@ -52,12 +61,12 @@ public class MainView extends Activity {
         this.setupModel();
 		this.setupView();
 
-		MyCount counter = new MyCount(MILLISECONDS_BETWEEN_TICKS, 1000);
+		Heartbeat counter = new Heartbeat(MILLISECONDS_BETWEEN_TICKS, 1000);
 	    counter.start();
     }
     
-	public class MyCount extends CountDownTimer {
-	    public MyCount(long millisInFuture, long countDownInterval) {
+	public class Heartbeat extends CountDownTimer {
+	    public Heartbeat(long millisInFuture, long countDownInterval) {
 	        super(millisInFuture, countDownInterval);
 	    }
 	    public void onFinish() {
@@ -77,9 +86,11 @@ public class MainView extends Activity {
     
     private void setupModel() {
     	this.model = PetFactory.getDragon();
-    }
+    } 
     
     private void setupView() {
+    	sprite = (ImageView) findViewById(R.id.sprite);
+
         try {
 	    	btn1 = (Button) findViewById(R.id.btn_1);
 	        btn1.setOnClickListener(listener);
@@ -100,15 +111,17 @@ public class MainView extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
         textOutput = (TextView) findViewById(R.id.textOutput);
         
         updateText();
     }
     
     private void updateText() {
-        textOutput.setText(model.getType() + " goal is "
-        		+ model.getGoal()
-        		+ "\n"
-        		+ model.toString());
+		if(model.isDead()) {
+			textOutput.setText(model.getType() + " has died!");
+		} else {
+			textOutput.setText(model.toString());
+		}
     }
 }
