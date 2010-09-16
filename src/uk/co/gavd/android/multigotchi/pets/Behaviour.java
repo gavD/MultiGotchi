@@ -1,12 +1,15 @@
 package uk.co.gavd.android.multigotchi.pets;
 
+import uk.co.gavd.android.multigotchi.collections.IMultiKeyCollectable;
+import uk.co.gavd.android.multigotchi.collections.ItemNotFoundException;
+
 /**
  * A "Behaviour" is something you can do to a pet. It has an execute
  * method that operates upon the pet.
  * 
  * @author Gavin Davies
  */
-public abstract class Behaviour {
+public abstract class Behaviour implements IMultiKeyCollectable {
 	protected Pet pet;
 	protected String name;
 	
@@ -20,12 +23,6 @@ public abstract class Behaviour {
 	}
 	
 	/**
-	 * @return The name of this behaviour. May be something like "feed"
-	 * or "wash"
-	 */
-	public abstract String getName();
-	
-	/**
 	 * Execute this behaviour against the linked pet.
 	 * 
 	 * Look up some attributes on the Pet this Behaviour is linked to, and
@@ -35,5 +32,5 @@ public abstract class Behaviour {
 	 * attribute that the Pet this Behaviour is linked to, this exception
 	 * is thrown
 	 */
-	public abstract void execute() throws AttributeNotFoundException;
+	public abstract void execute() throws ItemNotFoundException;
 }

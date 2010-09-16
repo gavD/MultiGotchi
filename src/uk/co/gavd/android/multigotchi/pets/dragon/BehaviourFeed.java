@@ -1,6 +1,7 @@
 package uk.co.gavd.android.multigotchi.pets.dragon;
 
-import uk.co.gavd.android.multigotchi.pets.AttributeNotFoundException;
+import uk.co.gavd.android.multigotchi.collections.IMultiKeyCollectable;
+import uk.co.gavd.android.multigotchi.collections.ItemNotFoundException;
 import uk.co.gavd.android.multigotchi.pets.Behaviour;
 import uk.co.gavd.android.multigotchi.pets.Pet;
 
@@ -10,7 +11,7 @@ import uk.co.gavd.android.multigotchi.pets.Pet;
  * 
  * @author Gavin Davies
  */
-public class BehaviourFeed extends Behaviour {
+public class BehaviourFeed extends Behaviour implements IMultiKeyCollectable {
 
 	/**
 	 * Create a behaviour with a reference to a pet
@@ -22,14 +23,13 @@ public class BehaviourFeed extends Behaviour {
 	}
 	
 	@Override
-	public void execute() throws AttributeNotFoundException {
-		this.pet.getAttribute("Food").increment(10);
-		this.pet.getAttribute("Fire").increment(3);
-		this.pet.getAttribute("Gold").decrement(15);
-		this.pet.getAttribute("Energy").increment(1);
+	public void execute() throws ItemNotFoundException {
+		this.pet.getAttribute(Dragon.ATTRIBUTE_FOOD).increment(10);
+		this.pet.getAttribute(Dragon.ATTRIBUTE_FIRE).increment(3);
+		this.pet.getAttribute(Dragon.ATTRIBUTE_GOLD).decrement(15);
+		this.pet.getAttribute(Dragon.ATTRIBUTE_ENERGY).increment(1);
 	}
 
-	@Override
 	public String getName() {
 		return "Feed";
 	}

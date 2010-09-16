@@ -1,10 +1,8 @@
 package uk.co.gavd.android.multigotchi.pets;
 
-import uk.co.gavd.android.multigotchi.pets.dragon.BehaviourFeed;
-import uk.co.gavd.android.multigotchi.pets.dragon.BehaviourHunt;
-import uk.co.gavd.android.multigotchi.pets.dragon.BehaviourPillage;
-import uk.co.gavd.android.multigotchi.pets.dragon.BehaviourSleep;
-import uk.co.gavd.android.multigotchi.pets.dragon.Dragon;
+import uk.co.gavd.android.multigotchi.collections.MultiKeyedCollection;
+import uk.co.gavd.android.multigotchi.pets.dragon.*;
+import uk.co.gavd.android.multigotchi.pets.carey.*;
 
 /**
  * Factory for creating various types of Pet. All configuration and
@@ -17,28 +15,65 @@ import uk.co.gavd.android.multigotchi.pets.dragon.Dragon;
 public class PetFactory {
 	
 	/**
+	 * Create a Carey pet
+	 * @return new Carey set up with attributes including smoking,
+	 * booze, caffeine and bacon
+	 */
+	public static Pet getCarey() {
+    	
+		Pet model = new Carey();
+		
+    	MultiKeyedCollection<Attribute> attributes = new MultiKeyedCollection<Attribute>();
+    	
+    	attributes.setCollection(
+    	    new Attribute(Carey.ATTRIBUTE_BACON, model),
+    		new Attribute(Carey.ATTRIBUTE_BOOZE, model),
+    		new Attribute(Carey.ATTRIBUTE_NICOTINE, model),
+    	    new Attribute(Carey.ATTRIBUTE_CALM, model)
+    	);
+
+    	MultiKeyedCollection<Behaviour> behaviours = new MultiKeyedCollection<Behaviour>();
+	   	behaviours.setCollection(
+    		new BehaviourEatBacon(model),
+    		new BehaviourDrinkBooze(model),
+    		new BehaviourSmoke(model),
+    		new BehaviourAttendMeeting(model)
+
+	   	);
+	   	
+	   	model.init(attributes, behaviours);
+    	
+    	return model;
+	}
+	/**
 	 * Create a Dragon pet
 	 * @return new Dragon set up with attributes including food, fire,
 	 * gold and energy and behaviours including feeding, hunting, sleeping
 	 * and pillaging
 	 */
 	public static Pet getDragon() {
-    	Pet model = new Dragon();
     	
-    	// attributes
-    	model.setAttributes(
-    		new Attribute("Food", model),
-    		new Attribute("Fire", model),
-    		new Attribute("Gold", model),
-    		new Attribute("Energy", model)
+		Pet model = new Dragon();
+		
+    	MultiKeyedCollection<Attribute> attributes = new MultiKeyedCollection<Attribute>();
+    	
+    	attributes.setCollection(
+    	    new Attribute(Dragon.ATTRIBUTE_FOOD, model),
+    		new Attribute(Dragon.ATTRIBUTE_FIRE, model),
+    		new Attribute(Dragon.ATTRIBUTE_GOLD, model),
+    		new Attribute(Dragon.ATTRIBUTE_ENERGY, model)
     	);
-    	
-    	model.setBehaviours(
+
+    	MultiKeyedCollection<Behaviour> behaviours = new MultiKeyedCollection<Behaviour>();
+	   	behaviours.setCollection(
     		new BehaviourFeed(model),
     		new BehaviourHunt(model),
     		new BehaviourSleep(model),
     		new BehaviourPillage(model)
-    	);
+
+	   	);
+	   	
+	   	model.init(attributes, behaviours);
     	
     	return model;
 	}

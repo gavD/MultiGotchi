@@ -2,6 +2,7 @@ package uk.co.gavd.android.multigotchi;
 
 // TODO give credit for image http://antifarea.deviantart.com/ / http://opengameart.org/content/10-fantasy-rpg-enemies
 
+import uk.co.gavd.android.multigotchi.collections.ItemNotFoundException;
 import uk.co.gavd.android.multigotchi.pets.*;
 import android.app.Activity;
 import android.os.Bundle;
@@ -42,9 +43,7 @@ public class MainView extends Activity {
 					model.operation(4);
 				}
 
-			} catch (AttributeNotFoundException e) {
-				// TODO
-			} catch (BehaviourNotFoundException e) {
+			} catch (ItemNotFoundException e) {
 				// TODO
 			}
 			
@@ -73,7 +72,7 @@ public class MainView extends Activity {
 	    	this.start();
 	    	try {
 				model.tick();
-			} catch (AttributeNotFoundException e) {
+			} catch (ItemNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -85,7 +84,7 @@ public class MainView extends Activity {
 	}
     
     private void setupModel() {
-    	this.model = PetFactory.getDragon();
+    	this.model = PetFactory.getCarey();
     } 
     
     private void setupView() {
@@ -107,7 +106,7 @@ public class MainView extends Activity {
 	        btn4 = (Button) findViewById(R.id.btn_4);
 	        btn4.setOnClickListener(listener);
 	        btn4.setText(model.getBehaviour(4).getName());
-		} catch (BehaviourNotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

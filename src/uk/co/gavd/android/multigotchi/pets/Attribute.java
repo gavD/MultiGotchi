@@ -1,6 +1,8 @@
 package uk.co.gavd.android.multigotchi.pets;
 
-public class Attribute {
+import uk.co.gavd.android.multigotchi.collections.IMultiKeyCollectable;
+
+public class Attribute implements IMultiKeyCollectable {
 	public static final int MIN_VALUE = 0;
 	public static final int MAX_VALUE = 100;
 	protected int level = 50;

@@ -7,13 +7,11 @@
  	   <Button android:id="@+id/btn_1"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:layout_width="0dip"
-            android:text="Feed" />
+            android:layout_width="0dip" />
         <Button android:id="@+id/btn_2"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:layout_width="0dip"
-            android:text="Flame on" />
+            android:layout_width="0dip" />
     </TableRow>
     
     <ImageView
@@ -30,13 +28,11 @@
  	   <Button android:id="@+id/btn_3"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:layout_width="0dip"
-            android:text="Rampage" />
+            android:layout_width="0dip" />
         <Button android:id="@+id/btn_4"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:layout_width="0dip"
-            android:text="Sleep" />
+            android:layout_width="0dip" />
             
     </TableRow>
 

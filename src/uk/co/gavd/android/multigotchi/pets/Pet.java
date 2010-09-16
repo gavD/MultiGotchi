@@ -1,5 +1,8 @@
 package uk.co.gavd.android.multigotchi.pets;
 
+import uk.co.gavd.android.multigotchi.collections.ItemNotFoundException;
+import uk.co.gavd.android.multigotchi.collections.MultiKeyedCollection;
+
 /**
  * Base class for all Pets
  * 
@@ -10,40 +13,18 @@ package uk.co.gavd.android.multigotchi.pets;
  */
 public abstract class Pet {
 	public abstract String getType();
-	public abstract void tick() throws AttributeNotFoundException;
-
-	private Attribute attribute1;
-	private Attribute attribute2;
-	private Attribute attribute3;
-	private Attribute attribute4;
+	public abstract void tick() throws ItemNotFoundException;
 	
-	private Behaviour behaviour1;
-	private Behaviour behaviour2;
-	private Behaviour behaviour3;
-	private Behaviour behaviour4;
+	private MultiKeyedCollection<Attribute> attributeCollection;
+	private MultiKeyedCollection<Behaviour> behaviourCollection;
 	
 	protected boolean dead = false;
 	
-	public void setAttributes(Attribute attribute1,
-			Attribute attribute2,
-			Attribute attribute3,
-			Attribute attribute4)
+	public void init(MultiKeyedCollection<Attribute> attributes,
+			MultiKeyedCollection<Behaviour> behaviours)
 	{
-		this.attribute1 = attribute1;
-		this.attribute2 = attribute2;
-		this.attribute3 = attribute3;
-		this.attribute4 = attribute4;
-	}
-	
-	public void setBehaviours(Behaviour theBehaviour1,
-			Behaviour theBehaviour2,
-			Behaviour theBehaviour3,
-			Behaviour theBehaviour4)
-	{
-		this.behaviour1 = theBehaviour1;
-		this.behaviour2 = theBehaviour2;
-		this.behaviour3 = theBehaviour3;
-		this.behaviour4 = theBehaviour4;		
+		this.attributeCollection = attributes;
+		this.behaviourCollection = behaviours;
 	}
 	
 	/**
@@ -55,83 +36,42 @@ public abstract class Pet {
 	 * @throws AttributeNotFoundException If there is no
 	 * attribute that has name [attributeName]
 	 */
-	public Attribute getAttribute(String attributeName)
-	throws AttributeNotFoundException
+	public Attribute getAttribute(String attributeName) throws ItemNotFoundException
 	{
-		if(attributeName.equals(attribute1.getName())) {
-			return attribute1;
-		}
-		if(attributeName.equals(attribute2.getName())) {
-			return attribute2;
-		}
-		if(attributeName.equals(attribute3.getName())) {
-			return attribute3;
-		}
-		if(attributeName.equals(attribute4.getName())) {
-			return attribute4;
-		}
-		throw new AttributeNotFoundException("Cannot find attribute " + attributeName
-				+ "; available attributes " + this.listAvailableAttributes());
+		return (Attribute)this.attributeCollection.findByName(attributeName);
 	}
 	
-	private String listAvailableAttributes() {
-		return attribute1.getName() + ", " + 
-			attribute2.getName() + ", " + 
-			attribute3.getName() + ", " + 
-			attribute4.getName();
+	public Attribute getAttribute(int index) throws ItemNotFoundException {
+		return (Attribute)this.attributeCollection.findByIndex(index);
+	}
+	
+	public Behaviour getBehaviour(String name) throws ItemNotFoundException
+	{
+		return (Behaviour)this.behaviourCollection.findByName(name);
+	}
+	
+	public Behaviour getBehaviour(int index) throws ItemNotFoundException
+	{
+		return (Behaviour)this.behaviourCollection.findByIndex(index);
+	}
+
+	/**
+	 * Execute operation with name operationName
+	 * @param operationName
+	 * @throws ItemNotFoundException
+	 * @throws AttributeNotFoundException
+	 */
+	public void operation(String operationName) throws ItemNotFoundException {
+		getBehaviour(operationName).execute();
 	}
 	
 	/**
-	 * Get an attribute by index
-	 * @param index 1, 2, 3 or 4, indicating which you are
-	 * after
-	 * @return The attribute at index [index]
-	 * @throws AttributeNotFoundException If there is no
-	 * attribute at position [index]
+	 * Run an operation at index operationIndex
+	 * @param operationIndex
+	 * @throws ItemNotFoundException
+	 * @throws AttributeNotFoundException
 	 */
-	public Attribute getAttribute(int index) throws AttributeNotFoundException {
-		switch (index) {
-		case 1: return attribute1;
-		case 2: return attribute2;
-		case 3: return attribute3;
-		case 4: return attribute4;
-		default: throw new AttributeNotFoundException("Cannot find attribute at index " + index
-				+ "; available attributes " + this.listAvailableAttributes());
-		}
-	}
-	
-	public Behaviour getBehaviour(String behaviourName) throws BehaviourNotFoundException
-	{
-		if(behaviourName.equals(behaviour1.getName())) {
-			return behaviour1;
-		}
-		if(behaviourName.equals(behaviour2.getName())) {
-			return behaviour2;
-		}
-		if(behaviourName.equals(behaviour3.getName())) {
-			return behaviour3;
-		}
-		if(behaviourName.equals(behaviour4.getName())) {
-			return behaviour4;
-		}
-		
-		throw new BehaviourNotFoundException("Cannot find behaviour " + behaviourName);
-	}
-	
-	public Behaviour getBehaviour(int index) throws BehaviourNotFoundException {
-		switch (index) {
-		case 1: return behaviour1;
-		case 2: return behaviour2;
-		case 3: return behaviour3;
-		case 4: return behaviour4;
-		default: throw new BehaviourNotFoundException("Cannot find behaviour at index " + index);
-		}
-	}
-	
-	public void operation(String operationName) throws BehaviourNotFoundException, AttributeNotFoundException {
-		getBehaviour(operationName).execute();
-	}
-	public void operation(int operationIndex) throws BehaviourNotFoundException, AttributeNotFoundException {
+	public void operation(int operationIndex) throws ItemNotFoundException {
 		getBehaviour(operationIndex).execute();
 	}
 	
@@ -152,9 +92,8 @@ public abstract class Pet {
 	
 	@Override
 	public String toString() {
-		return attribute1.toString() + "\n"
-			 + attribute2.toString() + "\n"
-			 + attribute3.toString() + "\n"
-			 + attribute4.toString() + "\n";
+		return getType() + "\n"
+			 + attributeCollection.toString();
 	}
+	
 }
