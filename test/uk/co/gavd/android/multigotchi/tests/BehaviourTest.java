@@ -71,6 +71,6 @@ public class BehaviourTest extends TestCase {
 	}
 	
 	public void testPetNumericAndStringBehaviourAccessorsAreEquivalent() throws ItemNotFoundException {
-    	assertSame(model.getBehaviour("Feed"), model.getBehaviour(1));
+		assertSame(model.getBehaviour("Feed"), model.getBehaviour(1));
 	}
 }
