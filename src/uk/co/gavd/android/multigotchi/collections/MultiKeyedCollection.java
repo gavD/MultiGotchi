@@ -75,7 +75,16 @@ public class MultiKeyedCollection<E extends IMultiKeyCollectable> {
 	}
 	
 	public String toString() {
-		return this.stringMap.toString();
+		String r = "";
+		for (int i = 1; i <= indexesForStringMap.length; i++) {
+			try {
+				r = r + findByIndex(i) + "\n";
+			} catch (ItemNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		return r;
 	}
 	
 	private void throwItemNotFoundException(String itemLabel) throws ItemNotFoundException {

@@ -14,6 +14,14 @@ import uk.co.gavd.android.multigotchi.pets.carey.*;
  */
 public class PetFactory {
 	
+	public static Pet getPet(String petName) {
+		if (petName.toLowerCase() == "carey") {
+			return PetFactory.getCarey();
+		} else {
+			return PetFactory.getDragon();
+		}
+	}
+	
 	/**
 	 * Create a Carey pet
 	 * @return new Carey set up with attributes including smoking,

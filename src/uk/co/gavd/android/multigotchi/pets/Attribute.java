@@ -63,8 +63,29 @@ public class Attribute implements IMultiKeyCollectable {
 	
 	@Override
 	public String toString() {
-		return this.name
-		       + ": " + level
-		       + "/" + MAX_VALUE;
+		int ATTRIBUTE_NAME_DISPLAY_LENGTH = 9;
+		
+		// clumsily pad it so all attributes are aligned
+		String r = this.name;
+		for (int i = this.name.length(); i < ATTRIBUTE_NAME_DISPLAY_LENGTH; i++) {
+			r += " ";
+		}
+		
+		r += " [";
+		
+		int SCALE_DOWN_FACTOR_FOR_BARS = 4;
+		
+		int bars = level / SCALE_DOWN_FACTOR_FOR_BARS;
+		int maxBars = MAX_VALUE / SCALE_DOWN_FACTOR_FOR_BARS;
+		for (int i = 0; i < maxBars; i++) {
+			if (i <= bars) {
+				r += "|";
+			} else {
+				r += " ";
+			}
+		}
+		
+		r += "]";
+		return r;
 	}
 }

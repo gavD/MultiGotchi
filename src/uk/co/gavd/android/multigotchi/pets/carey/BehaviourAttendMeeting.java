@@ -21,7 +21,7 @@ public class BehaviourAttendMeeting extends Behaviour implements IMultiKeyCollec
 		this.pet.getAttribute(Carey.ATTRIBUTE_BACON).decrement(2);
 		this.pet.getAttribute(Carey.ATTRIBUTE_BOOZE).decrement(5);
 		this.pet.getAttribute(Carey.ATTRIBUTE_NICOTINE).decrement(3);
-		this.pet.getAttribute(Carey.ATTRIBUTE_CALM).decrement(30);
+		this.pet.getAttribute(Carey.ATTRIBUTE_CALM).decrement(15);
 	}
 
 	public String getName() {

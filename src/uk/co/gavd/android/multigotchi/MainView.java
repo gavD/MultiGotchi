@@ -21,6 +21,7 @@ public class MainView extends Activity {
 	private TextView textOutput;
 	private Pet model;
 	private ImageView sprite;
+	private String modelName = "";
 	
 	private static final int MILLISECONDS_BETWEEN_TICKS = 4000;
 	
@@ -84,7 +85,8 @@ public class MainView extends Activity {
 	}
     
     private void setupModel() {
-    	this.model = PetFactory.getCarey();
+    	this.modelName = getResources().getText(R.string.pet).toString();
+    	this.model = PetFactory.getPet(this.modelName);
     } 
     
     private void setupView() {

@@ -31,6 +31,6 @@ public class Carey extends Pet {
 		this.getAttribute(Carey.ATTRIBUTE_NICOTINE).decrement(2);
 		this.getAttribute(Carey.ATTRIBUTE_BOOZE).decrement(3);
 		this.getAttribute(Carey.ATTRIBUTE_BACON).decrement(2);
-		this.getAttribute(Carey.ATTRIBUTE_CALM).increment(2);
+		this.getAttribute(Carey.ATTRIBUTE_CALM).decrement(2);
 	}
 }
